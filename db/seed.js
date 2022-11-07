@@ -143,15 +143,6 @@ async function seed() {
         "Wedge-like slices are soft with a bit of spongy pushback to the bite, but not too much.",
     },
   ]);
-  let perfect = false;
-  const simple = await Board.findOne({ where: { type: "Simple" } });
-  const cheeses = await Cheese.findAll();
-  await simple.addCheeses(cheeses);
-  const test = await simple.getCheeses();
-
-  test.map((t) => {
-    console.log(t.toJSON());
-  });
 }
 
 seed();
