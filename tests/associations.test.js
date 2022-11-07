@@ -50,3 +50,20 @@ describe("Does Board and Cheese have a Many-to-many relationship?", () => {
     expect(perfect).toBeTruthy;
   });
 });
+
+describe("A user can be loaded with it's boards", () => {
+  test("Multiple boards can be added to a user", async () => {
+    let perfect = false;
+    const taha = await User.findOne({ where: { name: "Taha" } });
+    const simple = await Board.findOne({ where: { type: "Simple" } });
+    const brunch = await Board.findOne({ where: { type: "Brunch" } });
+    taha.addBoard([simple, brunch]);
+
+    const first = await Board.findOne({ where: { id: 1 } });
+    const second = await Board.findOne({ where: { id: 1 } });
+    if (first.UserId == 1 && second.UserId == 1) {
+      perfect = true;
+    }
+    expect(perfect).toBeTruthy;
+  });
+});
