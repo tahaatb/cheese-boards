@@ -1,3 +1,4 @@
+"use strict";
 const { Cheese, Board, User, Bread, Fruit } = require("../models");
 const db = require("./db");
 
@@ -142,68 +143,15 @@ async function seed() {
         "Wedge-like slices are soft with a bit of spongy pushback to the bite, but not too much.",
     },
   ]);
-  await Fruit.bulkCreate([
-    {
-      name: "Apricots",
-      description: "Sweet like a peach with just a tiny punch of sour flavor.",
-    },
-    {
-      name: "Dates",
-      description: "Sweet with a rich, intensive caramel-like taste.",
-    },
-    {
-      name: "Cherries",
-      description:
-        "Sweet and sour, with slightly woody flavors and almond aromas.",
-    },
-    {
-      name: "Figs",
-      description:
-        "Honey-like sweetness with a subtle hint of berry and fresher shades of the flavor.",
-    },
-    {
-      name: "Olives",
-      description: "Firm texture and lovely, nutty flavor.",
-    },
-    {
-      name: "Pomegranate",
-      description: "Fairly tart with a bit of sweetness underneath.",
-    },
-    {
-      name: "Pears",
-      description: "sweet, slightly citrus flavor.",
-    },
-    {
-      name: "Apples",
-      description: "A little sweet and a little tart.",
-    },
-    {
-      name: "Grapes",
-      description: "Rich, sweet taste and firm, crunchy texture.",
-    },
-    {
-      name: "Zucchini",
-      description: "Mild taste that verges on sweet.",
-    },
-    {
-      name: "Cucumber",
-      description:
-        "Crisp texture, mild taste of the inner flesh, and slightly bitter flavor of the skin.",
-    },
-    {
-      title: "Roasted bell peppers",
-      description: "Lightly sweet, charred flavor.",
-    },
-    {
-      title: "Raspberries",
-      description:
-        "Fresh juicy fruit with slightly crunchy floral undertones blended with woody notes taste at the end.",
-    },
-    {
-      title: "Cranberries",
-      description: "Bitter, starchy and tart flavor.",
-    },
-  ]);
+  let perfect = false;
+  const simple = await Board.findOne({ where: { type: "Simple" } });
+  const cheeses = await Cheese.findAll();
+  await simple.addCheeses(cheeses);
+  const test = await simple.getCheeses();
+
+  test.map((t) => {
+    console.log(t.toJSON());
+  });
 }
 
 seed();
